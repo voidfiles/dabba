@@ -10,5 +10,9 @@ class BaseModule(object):
         self.name = name
         self.required = required
 
+        # Increase the creation counter, and save our local copy.
+        self.creation_counter = BaseModule.creation_counter
+        BaseModule.creation_counter += 1
+
     def process(self, job):
         return job

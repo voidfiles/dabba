@@ -46,7 +46,7 @@ class RequestsModule(BaseModule):
 
         return Bunch.fromDict({
             'content': content,
-            'headers': resp.headers,
+            'headers': dict(resp.headers.lower_items()),
             'history': history, 
         })
 
@@ -59,7 +59,7 @@ class RequestsModule(BaseModule):
             resp = requests.request(**kwargs)
             resp.raise_for_status()
         except requests.exceptions.HTTPError, e:
-            raise ProcessingException('A Connection error occurred.', slug='http_error', info=self.serialize_response(e.response))
+            raise ProcessingException('An HTTP error occurred.', slug='http_error', info=self.serialize_response(e.response))
         except requests.exceptions.RequestException, e:
             raise ProcessingException('There was an ambiguous exception that occurred while handling your request.', slug='request_exception')
         except requests.exceptions.ConnectionError, e:

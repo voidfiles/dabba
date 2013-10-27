@@ -75,6 +75,7 @@ class BasePipeline(object):
         job = self.job
         job.modules = []
         job.output = Bunch()
+
         for name, module in self.modules.iteritems():
             error = None
             job.modules += [name]
@@ -90,7 +91,7 @@ class BasePipeline(object):
                 error = e
                 error_data = {
                     'module_name': name,
-                    'message': e.message,
+                    'message': unicode(e),
                     'slug': 'unhandled_exception'
                 }
 
