@@ -3,26 +3,31 @@
 import os
 import sys
 
-import dabba
-
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+APP_NAME = 'dabba'
+APP_SCRIPT = './legit_r'
+VERSION = '0.0.1'
+
+
+# Grab requirments.
+with open('requirements.txt') as f:
+    required = f.readlines()
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
 packages = [
-    'dabba',
+    APP_NAME,
 ]
 
-requires = open('requirements.txt').read().split('\n')
-
 setup(
-    name='dabba',
-    version=dabba.__version__,
+    name=APP_NAME,
+    version=VERSION,
     description='Python Proccessing Pipeline',
     long_description=open('README.md').read() + '\n\n' +
                      open('HISTORY.md').read(),
@@ -31,9 +36,9 @@ setup(
     url='http://developers.app.net',
     packages=packages,
     package_data={'': ['LICENSE', 'NOTICE'], 'requests': ['*.pem']},
-    package_dir={'dabba': 'dabba'},
+    package_dir={APP_NAME: APP_NAME},
     include_package_data=True,
-    install_requires=requires,
+    install_requires=required,
     license=open('LICENSE').read(),
     zip_safe=False,
     classifiers=(
